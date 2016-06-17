@@ -12,10 +12,14 @@ var controller = Botkit.slackbot({
 
 function doleOutRemindersAtStart(controller, bot) {
     controller.storage.users.all(function (err, all_user_data) {
-        var data = all_user_data[0];
-        var date = data.date;
-        
-        scheduleReminder(bot, data, date);
+        if(all_user_data){
+            all_user_data.forEach(function(entry) {
+                var data = all_user_data[0];
+                var date = data.date;
+                
+                scheduleReminder(bot, data, date);
+            });
+        }
     });
 }
 
