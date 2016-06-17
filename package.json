@@ -1,0 +1,16 @@
+{
+  "name": "socrates-bot",
+  "version": "1.0.0",
+  "description": "SoCraTes Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "botkit": "^0.2.0",
+    "chrono-node": "^1.2.3",
+    "node-schedule": "^1.1.0"
+  }
+}
