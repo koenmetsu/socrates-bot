@@ -1,6 +1,7 @@
 var Botkit = require('botkit');
 var chrono = require('chrono-node');
 var schedule = require('node-schedule');
+require('newrelic');
 
 var controller = Botkit.slackbot({
     debug: false,
