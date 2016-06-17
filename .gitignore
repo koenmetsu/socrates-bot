@@ -38,6 +38,3 @@ jspm_packages
 
 # json db
 reminders.json
-
-# newrelic stuff
-newrelic.js
