@@ -3,10 +3,20 @@ require('newrelic');
 var Botkit = require('botkit');
 var chrono = require('chrono-node');
 var schedule = require('node-schedule');
+var redis = require('botkit-storage-redis');
+var url = require('url');
+
+var redisURL = url.parse(process.env.REDIS_CLOUD);
+var redisStorage = redis({
+    namespace: process.env.APP_NAME,
+    host: redisURL.hostname,
+    port: redisURL.port,
+    auth_pass: process.env.REDIS_AUTH
+});
 
 var controller = Botkit.slackbot({
     debug: false,
-    json_file_store: 'reminders.json'
+    storage: redisStorage
     //include "log: false" to disable logging
     //or a "logLevel" integer from 0 to 7 to adjust logging verbosity
 });

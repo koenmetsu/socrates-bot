@@ -10,8 +10,10 @@
   "license": "ISC",
   "dependencies": {
     "botkit": "^0.2.0",
+    "botkit-storage-redis": "^1.0.1",
     "chrono-node": "^1.2.3",
     "newrelic": "^1.28.1",
-    "node-schedule": "^1.1.0"
+    "node-schedule": "^1.1.0",
+    "redis": "^2.6.2"
   }
 }
