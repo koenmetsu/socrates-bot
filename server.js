@@ -11,6 +11,30 @@ var controller = Botkit.slackbot({
     //or a "logLevel" integer from 0 to 7 to adjust logging verbosity
 });
 
+controller.spawn({
+    token: process.env.TOKEN,
+}).startRTM(function (err, bot) {
+    doleOutRemindersAtStart(controller, bot);
+
+
+    // give the bot something to listen for.
+    controller.hears(
+        '(.*)[Rr]emind me (.*) (blog|post)(.*)(.*)',
+        ['direct_message', 'direct_mention', 'mention'],
+        function processMessage(bot, message) {
+            logMessage(message);
+            var parsedDate = chrono.parseDate(message.match[4]);
+            if (parsedDate === null) {
+                bot.startConversation(message, function (err, convo) {
+                    askWhichTime(bot, convo);
+                });
+            }
+            else {
+                setUpReminder(bot, message, parsedDate);
+            }
+        });
+});
+
 function doleOutRemindersAtStart(controller, bot) {
     controller.storage.users.all(function (err, all_user_data) {
         if(all_user_data){
@@ -123,28 +147,3 @@ function askWhichTime(bot, convo) {
             }
         });
 }
-
-// connect the bot to a stream of messages
-controller.spawn({
-    token: process.env.TOKEN,
-}).startRTM(function (err, bot) {
-    doleOutRemindersAtStart(controller, bot);
-
-
-    // give the bot something to listen for.
-    controller.hears(
-        '(.*)[Rr]emind me (.*) (blog|post)(.*)(.*)',
-        ['direct_message', 'direct_mention', 'mention'],
-        function processMessage(bot, message) {
-            logMessage(message);
-            var parsedDate = chrono.parseDate(message.match[4]);
-            if (parsedDate === null) {
-                bot.startConversation(message, function (err, convo) {
-                    askWhichTime(bot, convo);
-                });
-            }
-            else {
-                setUpReminder(bot, message, parsedDate);
-            }
-        });
-});
